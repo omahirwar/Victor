@@ -1,10 +1,11 @@
-Reena<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crypto Deposit - Victor Dashboard</title>
 <link rel="stylesheet" href="templatemo-glass-admin-style.css">
+
 <style>
 
 /* Page specific styling */
@@ -47,7 +48,7 @@ Reena<!DOCTYPE html>
     color: #000;
 }
 
-input[type="number"], select{
+input[type="number"], input[type="text"], select{
     width: 100%;
     padding: 12px;
     border-radius: 10px;
@@ -79,6 +80,39 @@ input[type="number"], select{
     opacity: 0.8;
 }
 
+/* POPUP STYLE */
+.tx-popup{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+}
+
+.tx-box{
+    background:#111;
+    padding:30px;
+    border-radius:12px;
+    width:400px;
+    animation: fadeInUp 0.4s ease;
+}
+
+.close-btn{
+    margin-top:10px;
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    background:#444;
+    color:#fff;
+    cursor:pointer;
+}
+
 @keyframes fadeInUp{
     from{opacity:0; transform: translateY(40px);}
     to{opacity:1; transform: translateY(0);}
@@ -86,6 +120,7 @@ input[type="number"], select{
 
 </style>
 </head>
+
 <body>
 
 <div class="dashboard">
@@ -129,7 +164,7 @@ input[type="number"], select{
 <label>Or Enter Amount Manually</label>
 <input type="number" id="amountInput" placeholder="Enter amount">
 
-<button class="deposit-btn">Proceed Deposit</button>
+<button class="deposit-btn" onclick="openTxForm()">Proceed Deposit</button>
 
 <div class="notice">
 Deposit only from <strong>Decentralized Wallet (MetaMask / TrustWallet)</strong>.<br>
@@ -142,7 +177,21 @@ Wrong network deposit will be lost.
 </main>
 </div>
 
+<!-- TRANSACTION POPUP -->
+<div id="txPopup" class="tx-popup">
+    <div class="tx-box">
+        <h3>Submit Transaction Hash</h3>
+
+        <label>Transaction Hash (TXN ID)</label>
+        <input type="text" id="txHash" placeholder="Enter transaction hash">
+
+        <button class="deposit-btn" onclick="submitTx()">Submit Transaction</button>
+        <button class="close-btn" onclick="closeTxForm()">Cancel</button>
+    </div>
+</div>
+
 <script>
+
 function copyWallet(){
     const text = document.getElementById("wallet").innerText;
     navigator.clipboard.writeText(text);
@@ -152,6 +201,35 @@ function copyWallet(){
 function setAmount(val){
     document.getElementById("amountInput").value = val;
 }
+
+function openTxForm(){
+    const amount = document.getElementById("amountInput").value;
+    if(amount == ""){
+        alert("Please select or enter amount first!");
+        return;
+    }
+    document.getElementById("txPopup").style.display="flex";
+}
+
+function closeTxForm(){
+    document.getElementById("txPopup").style.display="none";
+}
+
+function submitTx(){
+    const tx = document.getElementById("txHash").value;
+
+    if(tx == ""){
+        alert("Please enter transaction hash!");
+        return;
+    }
+
+    alert("Transaction Submitted Successfully!\nWaiting for Admin Approval.");
+
+    document.getElementById("txPopup").style.display="none";
+    document.getElementById("txHash").value="";
+    document.getElementById("amountInput").value="";
+}
+
 </script>
 
 </body>
