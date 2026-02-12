@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Wallet - Victor Dashboard</title>
+<link rel="stylesheet" href="templatemo-glass-admin-style.css">
+
+<style>
+
+.wallet-container{
+    max-width: 1100px;
+    margin: 50px auto;
+    animation: fadeInUp 0.8s ease;
+}
+
+.balance-card{
+    padding: 40px;
+    text-align: center;
+}
+
+.total-balance{
+    font-size: 42px;
+    font-weight: 700;
+    margin: 15px 0;
+    background: linear-gradient(135deg,var(--emerald-light),var(--emerald));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.action-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.action-btn{
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    background: linear-gradient(135deg,var(--emerald-light),var(--emerald));
+    transition: 0.3s;
+}
+
+.action-btn:hover{
+    transform: scale(1.05);
+}
+
+.token-list{
+    margin-top: 40px;
+}
+
+.token-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+}
+
+.token-name{
+    font-weight: 600;
+}
+
+.token-balance{
+    font-size: 18px;
+}
+
+.history-section{
+    margin-top: 50px;
+}
+
+.history-item{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
+}
+
+.status-success{
+    color: #00ff99;
+}
+
+.status-pending{
+    color: orange;
+}
+
+@keyframes fadeInUp{
+    from{opacity:0; transform: translateY(40px);}
+    to{opacity:1; transform: translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+<main class="main-content" style="margin-left:0;width:100%;">
+
+<nav class="navbar">
+<h1 class="page-title">My Wallet</h1>
+</nav>
+
+<div class="wallet-container">
+
+<!-- TOTAL BALANCE CARD -->
+<div class="glass-card balance-card">
+    <h2>Total Portfolio Balance</h2>
+    <div class="total-balance" id="totalBalance">$ 0.00</div>
+
+    <div class="action-buttons">
+        <button class="action-btn" onclick="goDeposit()">Deposit</button>
+        <button class="action-btn" onclick="goWithdraw()">Withdraw</button>
+    </div>
+</div>
+
+<!-- TOKEN LIST -->
+<div class="glass-card token-list">
+    <h3>Your Assets</h3>
+
+    <div class="token-item">
+        <div class="token-name">USDT (BEP20)</div>
+        <div class="token-balance" id="usdtBalance">0</div>
+    </div>
+
+    <div class="token-item">
+        <div class="token-name">BNB (BEP20)</div>
+        <div class="token-balance" id="bnbBalance">0</div>
+    </div>
+
+    <div class="token-item">
+        <div class="token-name">ETH (BEP20)</div>
+        <div class="token-balance" id="ethBalance">0</div>
+    </div>
+
+</div>
+
+<!-- TRANSACTION HISTORY -->
+<div class="glass-card history-section">
+    <h3>Recent Transactions</h3>
+
+    <div class="history-item">
+        <span>Deposit USDT</span>
+        <span class="status-success">Completed</span>
+    </div>
+
+    <div class="history-item">
+        <span>Withdraw BNB</span>
+        <span class="status-pending">Pending</span>
+    </div>
+
+</div>
+
+</div>
+
+</main>
+</div>
+
+<script>
+
+// DEMO BALANCES (change later from backend)
+let balances = {
+    usdt: 1250,
+    bnb: 3.5,
+    eth: 0.75
+};
+
+function updateWallet(){
+
+    document.getElementById("usdtBalance").innerText = balances.usdt + " USDT";
+    document.getElementById("bnbBalance").innerText = balances.bnb + " BNB";
+    document.getElementById("ethBalance").innerText = balances.eth + " ETH";
+
+    // Rough USD calculation
+    let totalUSD = (balances.usdt) + (balances.bnb * 300) + (balances.eth * 2500);
+
+    document.getElementById("totalBalance").innerText = "$ " + totalUSD.toFixed(2);
+}
+
+function goDeposit(){
+    window.location.href = "deposit.html";
+}
+
+function goWithdraw(){
+    window.location.href = "withdraw.html";
+}
+
+updateWallet();
+
+</script>
+
+</body>
+</html>
